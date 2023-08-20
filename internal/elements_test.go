@@ -63,3 +63,35 @@ func TestTimeRoundTrip(t *testing.T) {
 		t.Fatalf("invalid round-trip:\ngot= %s\nwant=%s", got, want)
 	}
 }
+
+func TestHrefUnmarshalText(t *testing.T) {
+	expectedURI := "/caldav/john.doe@example.com/calendar/test.ics"
+
+	var got Href
+	err := got.UnmarshalText([]byte(expectedURI))
+	if err != nil {
+		t.Fatalf("UnmarshalText failed for URI: %+v", err)
+	}
+
+	unexpectedURI := "/caldav/john.doe@example.com/calendar/abc%eth0.ics"
+	err = got.UnmarshalText([]byte(unexpectedURI))
+	if err != nil {
+		t.Fatalf("UnmarshalText failed for URI: %+v", err)
+	}
+}
+
+func TestETagUnmarshalText(t *testing.T) {
+	quotedEtag := `"123"`
+
+	var got ETag
+	err := got.UnmarshalText([]byte(quotedEtag))
+	if err != nil {
+		t.Fatalf("UnmarshalText failed for ETag: %+v", err)
+	}
+
+	unquotedEtag := "123"
+	err = got.UnmarshalText([]byte(unquotedEtag))
+	if err != nil {
+		t.Fatalf("UnmarshalText failed for ETag: %+v", err)
+	}
+}
