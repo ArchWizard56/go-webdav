@@ -152,7 +152,7 @@ func (nc negateCondition) MarshalText() ([]byte, error) {
 type timeRange struct {
 	XMLName xml.Name        `xml:"urn:ietf:params:xml:ns:caldav time-range"`
 	Start   dateWithUTCTime `xml:"start,attr,omitempty"`
-	End     dateWithUTCTime `xml:"end,attr,omitempty"`
+        End     dateWithUTCTime `xml:"end,attr,omitempty"`
 }
 
 const dateWithUTCTimeLayout = "20060102T150405Z"
@@ -171,7 +171,7 @@ func (t *dateWithUTCTime) UnmarshalText(b []byte) error {
 }
 
 func (t *dateWithUTCTime) MarshalText() ([]byte, error) {
-	s := time.Time(*t).Format(dateWithUTCTimeLayout)
+	s := time.Time(t).Format(dateWithUTCTimeLayout)
 	return []byte(s), nil
 }
 

@@ -3,6 +3,7 @@ package caldav
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"mime"
 	"net/http"
 	"net/url"
@@ -158,8 +159,8 @@ func encodeCompFilter(filter *CompFilter) *compFilter {
 	encoded := compFilter{Name: filter.Name}
 	if !filter.Start.IsZero() || !filter.End.IsZero() {
 		encoded.TimeRange = &timeRange{
-			Start: dateWithUTCTime(filter.Start),
-			End:   dateWithUTCTime(filter.End),
+                       Start: dateWithUTCTime(filter.Start),
+                       End:   dateWithUTCTime(filter.End),
 		}
 	}
 	for _, child := range filter.Comps {
@@ -222,6 +223,11 @@ func (c *Client) QueryCalendar(calendar string, query *CalendarQuery) ([]Calenda
 
 	calendarQuery := calendarQuery{Prop: propReq}
 	calendarQuery.Filter.CompFilter = *encodeCompFilter(&query.CompFilter)
+
+	log.Printf("COMPFILTER: %+v\n", query.CompFilter)
+	log.Printf("CALENDARQUERY: %+v\n", calendarQuery)
+	log.Printf("TIMERANGE: %+v\n", calendarQuery.Filter.CompFilter.CompFilters[0].TimeRange)
+
 	req, err := c.ic.NewXMLRequest("REPORT", calendar, &calendarQuery)
 	if err != nil {
 		return nil, err
