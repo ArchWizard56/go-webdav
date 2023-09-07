@@ -151,8 +151,8 @@ func (nc negateCondition) MarshalText() ([]byte, error) {
 // https://tools.ietf.org/html/rfc4791#section-9.9
 type timeRange struct {
 	XMLName xml.Name        `xml:"urn:ietf:params:xml:ns:caldav time-range"`
-	Start   dateWithUTCTime `xml:"start,attr,omitempty"`
-	End     dateWithUTCTime `xml:"end,attr,omitempty"`
+	Start   string `xml:"start,attr,omitempty"`
+	End     string `xml:"end,attr,omitempty"`
 }
 
 const dateWithUTCTimeLayout = "20060102T150405Z"
