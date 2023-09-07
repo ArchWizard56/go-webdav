@@ -3,6 +3,7 @@ package caldav
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"mime"
 	"net/http"
 	"net/url"
@@ -222,6 +223,10 @@ func (c *Client) QueryCalendar(calendar string, query *CalendarQuery) ([]Calenda
 
 	calendarQuery := calendarQuery{Prop: propReq}
 	calendarQuery.Filter.CompFilter = *encodeCompFilter(&query.CompFilter)
+
+	log.Printf("COMPFILTER: %+v\n", query.CompFilter)
+	log.Printf("CALENDARQUERY: %+v\n", calendarQuery)
+
 	req, err := c.ic.NewXMLRequest("REPORT", calendar, &calendarQuery)
 	if err != nil {
 		return nil, err
