@@ -1,4 +1,4 @@
-module github.com/emersion/go-webdav
+module github.com/ArchWizard56/go-webdav
 
 go 1.13
 
