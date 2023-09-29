@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/ArchWizard56/go-webdav"
+	"github.com/ArchWizard56/go-webdav/internal"
 	"github.com/emersion/go-ical"
-	"github.com/emersion/go-webdav"
-	"github.com/emersion/go-webdav/internal"
 )
 
 var CapabilityCalendar = webdav.Capability("calendar-access")
